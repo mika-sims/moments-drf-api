@@ -31,13 +31,13 @@ class PostSerializer(serializers.ModelSerializer):
         fields = [
             'id',
             'owner',
-            'created_at',
-            'updated_at',
+            'is_owner',
+            'profile_id',
             'title',
             'content',
             'image',
-            'is_owner',
-            'profile_id',
             'image_filter',
             'profile_image',
+            'created_at',
+            'updated_at',
         ]
