@@ -39,4 +39,5 @@ class PostSerializer(serializers.ModelSerializer):
             'is_owner',
             'profile_id',
             'image_filter',
+            'profile_image',
         ]
