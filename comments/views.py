@@ -17,3 +17,12 @@ class CommentList(generics.ListCreateAPIView):
         Set the owner of the comment to the user that created it
         """
         serializer.save(owner=self.request.user)
+
+
+class CommentDetail(generics.RetrieveUpdateDestroyAPIView):
+    """
+    API endpoint that represents a single comment
+    """
+    queryset = Comment.objects.all()
+    serializer_class = CommentDetailSerializer
+    permission_classes = [IsOwnerOrReadOnly]
