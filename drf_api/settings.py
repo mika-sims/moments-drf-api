@@ -71,7 +71,6 @@ INSTALLED_APPS = [
     'allauth.account',
     'dj_rest_auth.registration',
     'allauth.socialaccount',
-    'dj_rest_auth.registration',
     'corsheaders',
 
     'profiles',
