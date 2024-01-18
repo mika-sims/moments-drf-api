@@ -32,7 +32,7 @@ DEBUG = 'DEV' in os.environ
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    'moments-app-drf-api.herokuapp.com/'
+    'moments-app-drf-api-fcd67aa5401b.herokuapp.com/'
 ]
 
 
