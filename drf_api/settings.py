@@ -73,7 +73,8 @@ if 'CLIENT_ORIGIN' in os.environ:
     ]
 
 if 'CLIENT_ORIGIN_DEV' in os.environ:
-    match = re.search(r'^(.+-)', os.environ.get('CLIENT_ORIGIN_DEV', ''), re.IGNORECASE)
+    match = re.search(
+        r'^(.+-)', os.environ.get('CLIENT_ORIGIN_DEV', ''), re.IGNORECASE)
     extracted_url = match.group(1) if match else ''
     CORS_ALLOWED_ORIGIN_REGEXES = [
         rf"{extracted_url}",
@@ -149,14 +150,18 @@ WSGI_APPLICATION = 'drf_api.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': ({
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    } if 'DEV' in os.environ else dj_database_url.parse(
-        os.environ.get('DATABASE_URL')
-    ))
-}
+if 'DATABASE_URL' in os.environ:
+    DATABASES = {
+        'default': dj_database_url.parse(os.environ.get('DATABASE_URL')),
+    }
+else:
+    # If DATABASE_URL is not set, provide a default configuration
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # Password validation
