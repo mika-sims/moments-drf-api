@@ -68,18 +68,13 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
 ]
 
+CORS_ALLOWED_ORIGINS = []
+
 if 'CLIENT_ORIGIN' in os.environ:
-    CORS_ALLOWED_ORIGINS = [
-        os.environ.get('CLIENT_ORIGIN')
-    ]
+    CORS_ALLOWED_ORIGINS.append(os.environ.get('CLIENT_ORIGIN'))
 
 if 'CLIENT_ORIGIN_DEV' in os.environ:
-    match = re.search(
-        r'^(.+-)', os.environ.get('CLIENT_ORIGIN_DEV', ''), re.IGNORECASE)
-    extracted_url = match.group(1) if match else ''
-    CORS_ALLOWED_ORIGIN_REGEXES = [
-        rf"{extracted_url}",
-    ]
+    CORS_ALLOWED_ORIGINS.append(os.environ.get('CLIENT_ORIGIN_DEV'))
 
 CORS_ALLOW_CREDENTIALS = True
 
