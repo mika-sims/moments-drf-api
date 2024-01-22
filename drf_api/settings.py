@@ -21,8 +21,10 @@ if os.path.exists('env.py'):
 CLOUDINARY_STORAGE = {
     'CLOUDINARY_URL': os.environ.get('CLOUDINARY_URL')
 }
+
 MEDIA_URL = '/media/'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -71,10 +73,14 @@ ALLOWED_HOSTS = [
 CORS_ALLOWED_ORIGINS = []
 
 if 'CLIENT_ORIGIN' in os.environ:
-    CORS_ALLOWED_ORIGINS.append(os.environ.get('CLIENT_ORIGIN'))
-
+    CORS_ALLOWED_ORIGINS = [
+         os.environ.get('CLIENT_ORIGIN')
+     ]
 if 'CLIENT_ORIGIN_DEV' in os.environ:
-    CORS_ALLOWED_ORIGINS.append(os.environ.get('CLIENT_ORIGIN_DEV'))
+    extracted_url = re.match(r'^.+-', os.environ.get('CLIENT_ORIGIN_DEV', ''), re.IGNORECASE).group(0)
+    CORS_ALLOWED_ORIGIN_REGEXES = [
+        rf"{extracted_url}(eu|us)\d+\w\.gitpod\.io$",
+    ]
 
 CORS_ALLOW_CREDENTIALS = True
 
@@ -193,7 +199,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
