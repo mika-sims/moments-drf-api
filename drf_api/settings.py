@@ -75,9 +75,13 @@ CORS_ALLOWED_ORIGINS = [
     os.environ.get('CLIENT_ORIGIN_DEV'),
 ]
 
-CORS_ALLOWED_ORIGIN_REGEXES = [
-    os.environ.get('CORS_ALLOWED_ORIGIN_REGEXES'),
-]
+if 'CLIENT_ORIGIN_GITPOD' in os.environ:
+    extracted_url = re.match(
+        r'^.+-', os.environ.get('CLIENT_ORIGIN_GITPOD', ''), re.IGNORECASE
+    ).group(0)
+    CORS_ALLOWED_ORIGIN_REGEXES = [
+        rf"{extracted_url}(eu|us)\d+\w\.gitpod\.io$",
+    ]
 
 CORS_ALLOW_CREDENTIALS = True
 
